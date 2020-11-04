@@ -27,8 +27,10 @@ Example:
 		URL: 's3://$DomainName?region=ap-southeast-1'
 		cloudFrontDistributionID: $CFDistributionId
 
-# Goal
-
 # How to learn Cloudformation
 
 https://github.com/search?q=AWS%3A%3AS3%3A%3ABucket+WebsiteConfiguration+cloudfront+extension%3Ayml&ref=simplesearch
+
+# Alternatives
+
+* [Amplify](https://gohugo.io/hosting-and-deployment/hosting-on-aws-amplify/)
