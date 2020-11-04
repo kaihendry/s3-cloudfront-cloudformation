@@ -1,10 +1,10 @@
 AWSTemplateFormatVersion: 2010-09-09
 Parameters:
   DomainName:
-    Description: Domain name for your website (example.com)
+    Description: Domain name for your website (foo.example.com)
     Type: String
   AcmWildcard:
-    Description: Wildcard ACM ARN
+    Description: Wildcard ACM ARN us-east-1 DNS validation
     Type: String
 Resources:
   RootBucket:
@@ -59,3 +59,6 @@ Outputs:
   DistributionId:
     Value: !Ref CloudFrontDistribution
     Description: Id for CloudFront distribution
+  CloudfrontEndpoint:
+    Value: !GetAtt [CloudFrontDistribution, DomainName]
+    Description: Endpoint for Cloudfront distribution
