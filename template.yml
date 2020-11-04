@@ -20,7 +20,7 @@ Resources:
     Properties:
       DistributionConfig:
         Aliases:
-          - !Sub "${DomainName}"
+          - !Ref DomainName
         DefaultCacheBehavior:
           AllowedMethods:
             - GET
@@ -47,11 +47,6 @@ Resources:
         ViewerCertificate:
           AcmCertificateArn: !Ref AcmWildcard
           SslSupportMethod: sni-only
-  CloudFrontOriginAccessIdentity:
-    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
-    Properties:
-      CloudFrontOriginAccessIdentityConfig:
-        Comment: CloudFront Origin Access Identity
 Outputs:
   S3WebsiteURL:
     Value: !GetAtt RootBucket.WebsiteURL
