@@ -38,7 +38,7 @@ Resources:
           ViewerProtocolPolicy: redirect-to-https
         Enabled: true
         Origins:
-          - DomainName: !Select [2, !Split ["/", !GetAtt RootBucket.WebsiteURL]]
+          - DomainName: !GetAtt RootBucket.DomainName
             Id: s3_origin
             CustomOriginConfig:
               HTTPPort: 80
