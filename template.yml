@@ -53,12 +53,12 @@ Resources:
       CloudFrontOriginAccessIdentityConfig:
         Comment: CloudFront Origin Access Identity
 Outputs:
-  WebsiteURL:
+  S3WebsiteURL:
     Value: !GetAtt RootBucket.WebsiteURL
     Description: URL for website hosted on S3
-  DistributionId:
+  CFDistributionId:
     Value: !Ref CloudFrontDistribution
     Description: Id for CloudFront distribution
-  CloudfrontEndpoint:
+  CFDomainName:
     Value: !GetAtt [CloudFrontDistribution, DomainName]
     Description: Endpoint for Cloudfront distribution

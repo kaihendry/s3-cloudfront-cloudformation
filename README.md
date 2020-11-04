@@ -1,14 +1,19 @@
+# s3-cloudfront-cloudformation
+
+A minimal [Makefile based](https://github.com/tj/mmake) S3 Cloudfront Cloudformation template.
+
 # Time to deploy
 
+	aws cloudformation wait stack-create-complete --stack-name $(STACK)
 	real	4m8.483s
 	user	0m1.502s
 	sys	0m0.228s
 
-# Test
+# Verify
 
 	echo '<h1>Hello World</h1>' >> index.html
-	aws --profile mine s3 cp --acl public-read index.html s3://$DOMAIN
-	curl https://$CloudfrontEndpoint
+	aws --profile mine s3 cp --acl public-read index.html s3://$DomainName
+	curl https://$CFDomainName
 
 # Easy to target
 
@@ -18,9 +23,11 @@ Example:
 
 	deployment:
 	  targets:
-		name: 'example.com'
-		URL: 's3://www.example.com?region=ap-southeast-1'
-		cloudFrontDistributionID: E24QJ21B58IBG0
+		name: $DomainName
+		URL: 's3://$DomainName?region=ap-southeast-1'
+		cloudFrontDistributionID: $CFDistributionId
+
+# Goal
 
 # How to learn Cloudformation
 

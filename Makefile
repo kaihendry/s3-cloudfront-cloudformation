@@ -1,23 +1,35 @@
 STACK   = staging-thealaskaguys
 DOMAIN  = staging-shop.thealaskaguys.com
 YAML    = template.yml
-
-.PHONY: create info validate destroy
+ACM     = arn:aws:acm:us-east-1:407461997746:certificate/e39b2629-45b0-40c7-85fa-c7cd55ca6173
 
 .EXPORT_ALL_VARIABLES:
 AWS_PROFILE = mine
 
+# Create stack
 create: validate
 	aws cloudformation deploy --template $(YAML) --stack-name $(STACK) --parameter-overrides DomainName=$(DOMAIN) \
-	AcmWildcard=arn:aws:acm:us-east-1:407461997746:certificate/e39b2629-45b0-40c7-85fa-c7cd55ca6173
+	AcmWildcard=$(ACM)
+.PHONY: create
 
-	aws cloudformation wait stack-create-complete --stack-name $(STACK)
-
+# Get information
 info:
-	aws cloudformation describe-stack-events --stack-name $(STACK)
+	aws cloudformation describe-stacks --stack-name $(STACK)
+.PHONY: info
 
+# Validate template
 validate:
+	@aws --version
 	aws cloudformation validate-template --template-body file://$(YAML)
+.PHONY: validate
 
-destroy:
+# Size of template.yml
+# Goal is to reduce the size of this file
+size:
+	@wc -l $(YAML)
+.PHONY: size
+
+# Destroy stack
+clean:
 	aws cloudformation delete-stack --stack-name $(STACK)
+.PHONY: clean
