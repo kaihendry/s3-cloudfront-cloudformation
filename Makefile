@@ -6,11 +6,11 @@ ACM     = arn:aws:acm:us-east-1:407461997746:certificate/e39b2629-45b0-40c7-85fa
 .EXPORT_ALL_VARIABLES:
 AWS_PROFILE = mine
 
-# Create stack
-create: validate
+# deploy stack
+deploy: validate
 	aws cloudformation deploy --template $(YAML) --stack-name $(STACK) --parameter-overrides DomainName=$(DOMAIN) \
 	AcmWildcard=$(ACM)
-.PHONY: create
+.PHONY: deploy
 
 # Get information
 info:

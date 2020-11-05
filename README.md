@@ -31,6 +31,12 @@ Example:
 
 https://github.com/search?q=AWS%3A%3AS3%3A%3ABucket+WebsiteConfiguration+cloudfront+extension%3Ayml&ref=simplesearch
 
+# Bill of materials
+
+* https://ap-southeast-1.console.aws.amazon.com/cloudformation/home?region=ap-southeast-1
+* https://console.aws.amazon.com/cloudfront/home?region=ap-southeast-1
+* https://s3.console.aws.amazon.com/s3/home?region=ap-southeast-1
+
 # Alternatives
 
 * [Amplify](https://gohugo.io/hosting-and-deployment/hosting-on-aws-amplify/)

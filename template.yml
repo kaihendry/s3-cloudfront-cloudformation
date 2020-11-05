@@ -21,32 +21,41 @@ Resources:
       DistributionConfig:
         Aliases:
           - !Ref DomainName
-        DefaultCacheBehavior:
-          AllowedMethods:
-            - GET
-            - HEAD
-            - OPTIONS
-          TargetOriginId: s3_origin
-          ForwardedValues:
-            Headers:
-              - Origin
-              - Access-Control-Allow-Origin
-              - Access-Control-Request-Headers
-              - Access-Control-Request-Method
-              - Authorization
-            QueryString: false
-          ViewerProtocolPolicy: redirect-to-https
         Enabled: true
+        ViewerCertificate:
+          AcmCertificateArn: !Ref AcmWildcard
+          SslSupportMethod: sni-only
         Origins:
-          - DomainName: !GetAtt RootBucket.DomainName
-            Id: s3_origin
+          - Id: S3-Origin
+            DomainName: !Sub "${RootBucket}.s3-website-${AWS::Region}.amazonaws.com"
             CustomOriginConfig:
               HTTPPort: 80
               HTTPSPort: 443
               OriginProtocolPolicy: http-only
-        ViewerCertificate:
-          AcmCertificateArn: !Ref AcmWildcard
-          SslSupportMethod: sni-only
+        DefaultRootObject: index.html
+        DefaultCacheBehavior:
+          TargetOriginId: S3-Origin
+          ViewerProtocolPolicy: redirect-to-https
+          ForwardedValues:
+            QueryString: True
+            Cookies:
+              Forward: all
+          Compress: True
+  StaticWebBucketPolicy:
+    Type: "AWS::S3::BucketPolicy"
+    Properties:
+      Bucket:
+        Ref: RootBucket
+      PolicyDocument:
+        Statement:
+          - Sid: PublicReadGetObject
+            Effect: Allow
+            Principal: '*'
+            Action:
+              - s3:GetObject
+            Resource:
+              Fn::Join: ['', ['arn:aws:s3:::', {'Ref': 'RootBucket'}, '/*']]
+
 Outputs:
   S3WebsiteURL:
     Value: !GetAtt RootBucket.WebsiteURL
