@@ -30,9 +30,11 @@ Resources:
           SslSupportMethod: sni-only
         Origins:
           - Id: S3-Origin
-            DomainName: !GetAtt RootBucket.DomainName
-            S3OriginConfig:
-              OriginAccessIdentity: !Sub "origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}"
+            DomainName: !Sub "${RootBucket}.s3-website-${AWS::Region}.amazonaws.com"
+            CustomOriginConfig:
+              HTTPPort: 80
+              HTTPSPort: 443
+              OriginProtocolPolicy: http-only
         DefaultCacheBehavior:
           TargetOriginId: S3-Origin
           ViewerProtocolPolicy: redirect-to-https
@@ -42,12 +44,6 @@ Resources:
               Forward: all
           Compress: True
 
-  CloudFrontOriginAccessIdentity:
-    Type: "AWS::CloudFront::CloudFrontOriginAccessIdentity"
-    Properties:
-      CloudFrontOriginAccessIdentityConfig:
-        Comment: CloudFrontOriginAccessIdentity for Week1
-
   StaticWebBucketPolicy:
     Type: "AWS::S3::BucketPolicy"
     Properties:
@@ -55,12 +51,10 @@ Resources:
         Ref: RootBucket
       PolicyDocument:
         Statement:
-          - Action:
-              - "s3:GetObject"
-            Effect: "Allow"
-            Resource: !Sub "arn:aws:s3:::${RootBucket}/*"
-            Principal:
-              AWS: !Sub "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${CloudFrontOriginAccessIdentity}"
+          - Action: s3:GetObject
+            Effect: Allow
+            Resource: !Sub arn:aws:s3:::${RootBucket}/*
+            Principal: '*'
 
 Outputs:
   S3WebsiteURL:
