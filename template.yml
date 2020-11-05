@@ -40,8 +40,6 @@ Resources:
           ViewerProtocolPolicy: redirect-to-https
           ForwardedValues:
             QueryString: True
-            Cookies:
-              Forward: all
           Compress: True
 
   StaticWebBucketPolicy:

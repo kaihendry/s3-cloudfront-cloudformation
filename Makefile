@@ -1,5 +1,5 @@
-STACK   = thealaskaguys
-DOMAIN  = shop.thealaskaguys.com
+STACK   = staging-thealaskaguys
+DOMAIN  = staging-shop.thealaskaguys.com
 YAML    = template.yml
 ACM     = arn:aws:acm:us-east-1:407461997746:certificate/e39b2629-45b0-40c7-85fa-c7cd55ca6173
 
