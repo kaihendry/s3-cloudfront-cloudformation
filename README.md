@@ -34,3 +34,4 @@ https://github.com/search?q=AWS%3A%3AS3%3A%3ABucket+WebsiteConfiguration+cloudfr
 # Alternatives
 
 * [Amplify](https://gohugo.io/hosting-and-deployment/hosting-on-aws-amplify/)
+* 217LOC [Terraform](https://github.com/conortm/terraform-aws-s3-static-website/blob/master/main.tf)
