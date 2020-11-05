@@ -7,6 +7,7 @@ Parameters:
     Description: Wildcard ACM ARN us-east-1 DNS validation
     Type: String
 Resources:
+
   RootBucket:
     Type: AWS::S3::Bucket
     Properties:
@@ -15,6 +16,7 @@ Resources:
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: 404.html
+
   CloudFrontDistribution:
     Type: AWS::CloudFront::Distribution
     Properties:
@@ -40,6 +42,13 @@ Resources:
             Cookies:
               Forward: all
           Compress: True
+
+  CloudFrontOriginAccessIdentity:
+    Type: "AWS::CloudFront::CloudFrontOriginAccessIdentity"
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: CloudFrontOriginAccessIdentity for Week1
+
   StaticWebBucketPolicy:
     Type: "AWS::S3::BucketPolicy"
     Properties:
@@ -47,13 +56,12 @@ Resources:
         Ref: RootBucket
       PolicyDocument:
         Statement:
-          - Sid: PublicReadGetObject
-            Effect: Allow
-            Principal: '*'
-            Action:
-              - s3:GetObject
-            Resource:
-              Fn::Join: ['', ['arn:aws:s3:::', {'Ref': 'RootBucket'}, '/*']]
+          - Action:
+              - "s3:GetObject"
+            Effect: "Allow"
+            Resource: !Sub "arn:aws:s3:::${RootBucket}/*"
+            Principal:
+              AWS: !Sub "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${CloudFrontOriginAccessIdentity}"
 
 Outputs:
   S3WebsiteURL:
