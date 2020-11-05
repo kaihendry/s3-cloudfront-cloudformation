@@ -14,7 +14,6 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Ref DomainName
-      AccessControl: PublicRead
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: 404.html
@@ -31,11 +30,9 @@ Resources:
           SslSupportMethod: sni-only
         Origins:
           - Id: S3-Origin
-            DomainName: !Sub "${RootBucket}.s3-website-${AWS::Region}.amazonaws.com"
-            CustomOriginConfig:
-              HTTPPort: 80
-              HTTPSPort: 443
-              OriginProtocolPolicy: http-only
+            DomainName: !GetAtt RootBucket.DomainName
+            S3OriginConfig:
+              OriginAccessIdentity: !Sub "origin-access-identity/cloudfront/${CloudFrontOriginAccessIdentity}"
         DefaultCacheBehavior:
           TargetOriginId: S3-Origin
           ViewerProtocolPolicy: redirect-to-https

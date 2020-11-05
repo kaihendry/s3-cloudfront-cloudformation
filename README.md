@@ -15,6 +15,10 @@ A minimal [Makefile based](https://github.com/tj/mmake) S3 Cloudfront Cloudforma
 	aws --profile mine s3 cp --acl public-read index.html s3://$DomainName
 	curl https://$CFDomainName
 
+# Makefile override
+
+	make STACK=staging-example info
+
 # Easy to target
 
 Goal make it easy to [configure Hugo to deploy to](https://gohugo.io/hosting-and-deployment/hugo-deploy/)
@@ -28,6 +32,10 @@ Example:
 		cloudFrontDistributionID: $CFDistributionId
 
 # How to learn Cloudformation
+
+Using a [VS code extension](https://marketplace.visualstudio.com/items?itemName=kddejong.vscode-cfn-lint), you can see links to the docs:
+
+<img src="https://s.natalian.org/2020-11-05/docs.png" alt="Hover to see documentation link">
 
 https://github.com/search?q=AWS%3A%3AS3%3A%3ABucket+WebsiteConfiguration+cloudfront+extension%3Ayml&ref=simplesearch
 
