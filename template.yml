@@ -32,7 +32,6 @@ Resources:
               HTTPPort: 80
               HTTPSPort: 443
               OriginProtocolPolicy: http-only
-        DefaultRootObject: index.html
         DefaultCacheBehavior:
           TargetOriginId: S3-Origin
           ViewerProtocolPolicy: redirect-to-https
