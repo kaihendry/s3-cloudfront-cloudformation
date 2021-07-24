@@ -29,8 +29,9 @@ Resources:
         - Name: !Ref DomainName
           Type: A
           AliasTarget:
-            HostedZoneId: !Ref HostedZone
-            DNSName: !Ref CloudFrontDistribution
+            # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-route53-aliastarget-1.html#cfn-route53-aliastarget-hostedzoneid
+            HostedZoneId: Z2FDTNDATAQYW2
+            DNSName: !GetAtt CloudFrontDistribution.DomainName
 
   CloudFrontDistribution:
     Type: AWS::CloudFront::Distribution
