@@ -7,6 +7,9 @@ Parameters:
   AcmWildcard:
     Description: Wildcard ACM ARN us-east-1 DNS validation
     Type: String
+  HostedZone:
+    Description: Hosted zone ID
+    Type: String
 
 Resources:
 
@@ -17,6 +20,17 @@ Resources:
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: 404.html
+
+  HostedZoneRecordSetGroup:
+    Type: AWS::Route53::RecordSetGroup
+    Properties:
+      HostedZoneId: !Ref HostedZone
+      RecordSets:
+        - Name: !Ref DomainName
+          Type: A
+          AliasTarget:
+            HostedZoneId: !Ref HostedZone
+            DNSName: !Ref CloudFrontDistribution
 
   CloudFrontDistribution:
     Type: AWS::CloudFront::Distribution
